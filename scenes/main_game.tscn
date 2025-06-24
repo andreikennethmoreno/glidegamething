@@ -327,7 +327,7 @@ sources/0 = SubResource("TileSetAtlasSource_d2op2")
 [node name="TileMap" type="Node" parent="."]
 
 [node name="Player" parent="TileMap" instance=ExtResource("2_d2op2")]
-position = Vector2(-172, 122)
+position = Vector2(-153, -109)
 metadata/_edit_group_ = true
 
 [node name="TransitionCamera" type="Camera2D" parent="TileMap/Player"]

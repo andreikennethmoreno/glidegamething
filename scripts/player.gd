@@ -4,7 +4,9 @@ extends CharacterBody2D
 const SPEED = 130.0
 const JUMP_VELOCITY = -400.0
 const SPLAT_FALL_THRESHOLD = 150.0
-const WALL_JUMP_PUSH = -100  # ← Horizontal push force
+const WALL_JUMP_PUSH = -100
+const NORMAL_GRAVITY_SCALE = 1.0
+const GLIDE_GRAVITY_SCALE = 0.2
 
 # === STATE VARIABLES ===
 var input_enabled := true
@@ -15,33 +17,49 @@ var _suffocating := false
 var can_grab := false
 var is_grabbing := false
 var splat_timer := 0.0
-var gravity_scale := 1.0
+var gravity_scale := NORMAL_GRAVITY_SCALE
 var jumped_from_grab := false
-var last_wall_direction := 0  # -1 = right wall, 1 = left wall
-var can_regrab := true  # ← Cooldown to prevent insta-grab after wall jump
+var last_wall_direction := 0
+var can_regrab := true
+var is_gliding := false
+var can_jump := false
+
 
 # === NODES ===
 @onready var animated_sprite: AnimatedSprite2D = $CharacterSprite
 @onready var hit_sound: AudioStreamPlayer2D = $hit_sound
 @onready var jump_timer: Timer = $JumpTimer
 
+func format_time(seconds: float) -> String:
+	var total_seconds = int(seconds)
+	var h = total_seconds / 3600
+	var m = (total_seconds % 3600) / 60
+	var s = total_seconds % 60
+	return "%02d:%02d:%02d" % [h, m, s]
+
+func _ready():
+	jump_timer.start()
+	Save.is_playing = true
+
+
 func _physics_process(delta: float) -> void:
+	var formatted_time = format_time(Save.play_timer)
+	var height_meters = "%.2f" % abs(Save.highest_y_position)
+
 	var was_on_floor = is_on_floor()
 
-	# === Skip logic if can't move ===
 	if not input_enabled or is_dead or _suffocating:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 
-	# === Splat timer pause ===
 	if splat_timer > 0.0:
 		splat_timer -= delta
 		move_and_slide()
 		return
 
 	# === JUMP ===
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and can_jump:
 		if is_grabbing:
 			velocity = Vector2.ZERO
 			velocity.y = JUMP_VELOCITY
@@ -55,6 +73,10 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 			print("Jumped")
 
+		can_jump = false
+		Save.flap_count += 1
+		jump_timer.start()
+
 	# === GRAB LOGIC ===
 	if can_grab and can_regrab and Input.is_action_pressed("grab_hold"):
 		if not is_grabbing:
@@ -62,15 +84,34 @@ func _physics_process(delta: float) -> void:
 		is_grabbing = true
 		velocity = Vector2.ZERO
 		move_and_slide()
+		animated_sprite.play("grab")
+		Save.grab_count += 1
 		return
 	else:
 		if is_grabbing:
 			print("Released grab.")
 		is_grabbing = false
 
-	# === GRAVITY ===
+	# === APPLY GRAVITY ===
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
+
+	# === GLIDE LOGIC (AFTER gravity is applied) ===
+	if not is_on_floor():
+		var falling = velocity.y > 0 and not is_grabbing and not jumped_from_grab
+		if falling:
+			if not is_gliding:
+				print("Gliding!")
+			gravity_scale = GLIDE_GRAVITY_SCALE
+			is_gliding = true
+		else:
+			gravity_scale = NORMAL_GRAVITY_SCALE
+			is_gliding = false
+	else:
+		if is_gliding:
+			print("Landed - reset glide")
+		gravity_scale = NORMAL_GRAVITY_SCALE
+		is_gliding = false
 
 	# === HORIZONTAL MOVEMENT ===
 	var direction := Input.get_axis("move_left", "move_right")
@@ -81,29 +122,27 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.flip_h = direction < 0
 
 	# === ANIMATION ===
-	if is_on_floor():
-		animated_sprite.play("idle" if direction == 0 else "run")
-	else:
-		animated_sprite.play("jump")
+	if not is_grabbing:
+		if is_on_floor():
+			animated_sprite.play("idle" if direction == 0 else "run")
+		else:
+			animated_sprite.play("jump")
 
-	# === SPLAT CHECK ===
-	var is_falling = velocity.y > 0 and not is_on_floor()
-	if is_falling:
-		if is_on_floor() and velocity.y > SPLAT_FALL_THRESHOLD:
+	# === MOVE CHARACTER ===
+	var previous_vertical_velocity = velocity.y
+	move_and_slide()
+
+	# === LANDING & SPLAT ===
+	if is_on_floor() and not was_on_floor:
+		if previous_vertical_velocity > SPLAT_FALL_THRESHOLD:
 			animated_sprite.play("splat")
 			splat_timer = 0.3
 			print("SPLAT!")
-		elif is_on_floor():
+		else:
 			print("Safe landing.")
-
-	# === MOVE CHARACTER ===
-	move_and_slide()
-
-	# === LANDING RESET ===
-	if is_on_floor() and not was_on_floor:
 		print("Landed")
 
-	# === RESET jumped_from_grab once off the ground ===
+	# === RESET jumped_from_grab ===
 	if was_on_floor and not is_on_floor():
 		jumped_from_grab = false
 
@@ -112,9 +151,8 @@ func _enable_grab_delay() -> void:
 	await get_tree().create_timer(0.2).timeout
 	can_regrab = true
 
-# === TIMERS ===
 func _on_jump_timer_timeout() -> void:
-	pass
+	can_jump = true
 
 func _on_grab_area_body_entered(body: Node2D) -> void:
 	if body.name == "Grab":
