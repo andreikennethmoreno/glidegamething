@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=3 uid="uid://2xp4fpchs5mc"]
+
+[ext_resource type="Script" uid="uid://bgak536aescva" path="res://scripts/opening_scene.gd" id="1_60xhg"]
+[ext_resource type="FontFile" uid="uid://bfbrqoltxa77f" path="res://assets/fonts/rainyhearts.ttf" id="2_x7dql"]
+
+[sub_resource type="Animation" id="Animation_cdf8s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cwjs1"]
+resource_name = "typewriter_text"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfw5c"]
+_data = {
+&"RESET": SubResource("Animation_cdf8s"),
+&"typewriter_text": SubResource("Animation_cwjs1")
+}
+
+[node name="OpeningScene" type="Node"]
+script = ExtResource("1_60xhg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -279.0
+offset_top = -64.0
+offset_right = 285.0
+offset_bottom = 187.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_x7dql")
+theme_override_font_sizes/font_size = 24
+text = "“She climbs, not for revenge — but to remember who she was beneath the mask.”
+
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hfw5c")
+}
+autoplay = "typewriter_text"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

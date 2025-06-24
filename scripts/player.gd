@@ -7,6 +7,7 @@ const SPLAT_FALL_THRESHOLD = 150.0
 const WALL_JUMP_PUSH = -100
 const NORMAL_GRAVITY_SCALE = 1.0
 const GLIDE_GRAVITY_SCALE = 0.2
+const JUMP_COOLDOWN_TIME := 3.0  # Seconds
 
 # === STATE VARIABLES ===
 var input_enabled := true
@@ -22,13 +23,17 @@ var jumped_from_grab := false
 var last_wall_direction := 0
 var can_regrab := true
 var is_gliding := false
-var can_jump := false
+var can_jump := true
 
+# === JUMP COOLDOWN TRACKING ===
+var jump_in_cooldown := false
+var current_jump_cooldown := 0.0
 
 # === NODES ===
 @onready var animated_sprite: AnimatedSprite2D = $CharacterSprite
 @onready var hit_sound: AudioStreamPlayer2D = $hit_sound
 @onready var jump_timer: Timer = $JumpTimer
+@onready var jump_progress_bar: TextureProgressBar = $JumpProgressBar
 
 func format_time(seconds: float) -> String:
 	var total_seconds = int(seconds)
@@ -38,9 +43,7 @@ func format_time(seconds: float) -> String:
 	return "%02d:%02d:%02d" % [h, m, s]
 
 func _ready():
-	jump_timer.start()
 	Save.is_playing = true
-
 
 func _physics_process(delta: float) -> void:
 	var formatted_time = format_time(Save.play_timer)
@@ -75,7 +78,23 @@ func _physics_process(delta: float) -> void:
 
 		can_jump = false
 		Save.flap_count += 1
-		jump_timer.start()
+
+		# Start cooldown manually
+		jump_in_cooldown = true
+		current_jump_cooldown = JUMP_COOLDOWN_TIME
+
+	# === UPDATE JUMP PROGRESS BAR ===
+	if jump_in_cooldown:
+		current_jump_cooldown -= delta
+		if current_jump_cooldown <= 0:
+			current_jump_cooldown = 0
+			jump_in_cooldown = false
+			can_jump = true
+
+		var progress = (1.0 - (current_jump_cooldown / JUMP_COOLDOWN_TIME)) * 100.0
+		jump_progress_bar.value = progress
+	else:
+		jump_progress_bar.value = 100.0
 
 	# === GRAB LOGIC ===
 	if can_grab and can_regrab and Input.is_action_pressed("grab_hold"):
@@ -96,7 +115,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
 
-	# === GLIDE LOGIC (AFTER gravity is applied) ===
+	# === GLIDE LOGIC ===
 	if not is_on_floor():
 		var falling = velocity.y > 0 and not is_grabbing and not jumped_from_grab
 		if falling:
@@ -151,8 +170,7 @@ func _enable_grab_delay() -> void:
 	await get_tree().create_timer(0.2).timeout
 	can_regrab = true
 
-func _on_jump_timer_timeout() -> void:
-	can_jump = true
+# (Removed _on_jump_timer_timeout — no longer needed)
 
 func _on_grab_area_body_entered(body: Node2D) -> void:
 	if body.name == "Grab":

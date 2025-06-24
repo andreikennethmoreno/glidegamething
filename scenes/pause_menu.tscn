@@ -1,0 +1,152 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdo31r2atnr2u"]
+
+[ext_resource type="Script" uid="uid://dugq5pax4axw7" path="res://scripts/pause_menu.gd" id="1_myx47"]
+[ext_resource type="FontFile" uid="uid://bfbrqoltxa77f" path="res://assets/fonts/rainyhearts.ttf" id="2_myx47"]
+
+[sub_resource type="Theme" id="Theme_n87rw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_71k7c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmnsq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ofnjo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1rgno"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4hnlu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3o3g3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h5b1d"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_myx47")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 491.0
+offset_right = 3.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -522.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 1
+offset_left = 45.0
+offset_top = 42.0
+offset_right = 301.0
+offset_bottom = 150.0
+scale = Vector2(2, 2)
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 14
+
+[node name="Resume" type="Button" parent="Grid"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_n87rw")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.516208, 0.51058, 0.218513, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_71k7c")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cmnsq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ofnjo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1rgno")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4hnlu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3o3g3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_h5b1d")
+text = "RESUME"
+alignment = 0
+
+[node name="Restart" type="Button" parent="Grid"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_n87rw")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_71k7c")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cmnsq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ofnjo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1rgno")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4hnlu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3o3g3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_h5b1d")
+text = "RESTART
+"
+alignment = 0
+
+[node name="Quit" type="Button" parent="Grid"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_n87rw")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_71k7c")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cmnsq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ofnjo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1rgno")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4hnlu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3o3g3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_h5b1d")
+text = "QUIT
+"
+alignment = 0
+
+[node name="stats_section" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 103.0
+offset_top = -684.0
+offset_right = 425.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 48
+text = "Time: 00:32
+Highest: 100m
+Falls: 3
+Jumps: 33
+Grabs: 33"
+
+[connection signal="pressed" from="Grid/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Grid/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Grid/Quit" to="." method="_on_quit_pressed"]

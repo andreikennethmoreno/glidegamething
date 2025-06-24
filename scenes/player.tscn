@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://3ymra7wyqdwr"]
+[gd_scene load_steps=30 format=3 uid="uid://3ymra7wyqdwr"]
 
 [ext_resource type="Texture2D" uid="uid://csaypi7h22f1w" path="res://assets/sprites/angel/idle.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://by3c3mwiwnsms" path="res://scripts/player.gd" id="1_g2els"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b32wedsuyf441" path="res://assets/sprites/angel/run.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://b440md4diu3y7" path="res://assets/sprites/angel/jump_wings.png" id="4_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://d2kwdn3ha0qy1" path="res://assets/sprites/angel/death.png" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://dp2usl25qx4o0" path="res://assets/sprites/progressbar_empty.png" id="7_smehm"]
+[ext_resource type="Texture2D" uid="uid://7gwcpolwtifw" path="res://assets/sprites/progressbar_full.png" id="8_ur7pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
 atlas = ExtResource("2_tuyoq")
@@ -175,11 +177,13 @@ radius = 7.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
+metadata/_edit_lock_ = true
 
 [node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
 z_index = 999
 sprite_frames = SubResource("SpriteFrames_tuyoq")
-animation = &"grab"
+animation = &"idle"
+metadata/_edit_lock_ = true
 
 [node name="CharacterCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -194,8 +198,15 @@ wait_time = 2.0
 autostart = true
 
 [node name="JumpProgressBar" type="TextureProgressBar" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+z_index = 900
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 275.0
+offset_bottom = 43.0
+scale = Vector2(0.04, 0.04)
+texture_under = ExtResource("7_smehm")
+texture_progress = ExtResource("8_ur7pv")
+metadata/_edit_lock_ = true
 
 [node name="GrabArea" type="Area2D" parent="."]
 
