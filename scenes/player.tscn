@@ -190,7 +190,6 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_tuyoq")
 
 [node name="JumpTimer" type="Timer" parent="."]
-wait_time = 3.0
 autostart = true
 
 [node name="GlideTimer" type="Timer" parent="."]

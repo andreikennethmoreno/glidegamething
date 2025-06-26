@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
 # === CONSTANTS ===
-const SPEED = 130.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 100.0
+const JUMP_VELOCITY = -560.0
 const SPLAT_FALL_THRESHOLD = 150.0
 const WALL_JUMP_PUSH = -100
 const NORMAL_GRAVITY_SCALE = 1.0
 const GLIDE_GRAVITY_SCALE = 0.2
-const JUMP_COOLDOWN_TIME := 3.0  # Seconds
+const JUMP_COOLDOWN_TIME := 1.0  # Seconds
 
 # === STATE VARIABLES ===
 var input_enabled := true
@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		jump_progress_bar.value = 100.0
 
 	# === GRAB LOGIC ===
-	if can_grab and can_regrab and Input.is_action_pressed("grab_hold"):
+	if can_grab and can_regrab and not jump_in_cooldown and Input.is_action_pressed("grab_hold"):
 		if not is_grabbing:
 			print("Grabbing!")
 		is_grabbing = true
