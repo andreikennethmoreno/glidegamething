@@ -5,7 +5,7 @@ extends Node
 var text_finished: bool = false
 var timer_started: bool = false
 var elapsed_time: float = 0.0
-const WAIT_DURATION: float = 1.5
+const WAIT_DURATION: float = 0.5
 
 func _ready() -> void:
 	animation_player.play("typewriter_text")

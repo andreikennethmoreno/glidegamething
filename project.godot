@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GlideGameThing"
-run/main_scene="uid://bfyrux3n7eheu"
+run/main_scene="uid://c6rwu1kc02g2w"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ Save="*res://scripts/save.gd"
 
 window/size/viewport_width=846
 window/size/viewport_height=720
+window/size/mode=3
 window/size/borderless=true
 window/stretch/mode="viewport"
 

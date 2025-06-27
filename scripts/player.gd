@@ -7,7 +7,7 @@ const SPLAT_FALL_THRESHOLD = 150.0
 const WALL_JUMP_PUSH = -100
 const NORMAL_GRAVITY_SCALE = 1.0
 const GLIDE_GRAVITY_SCALE = 0.2
-const JUMP_COOLDOWN_TIME := 1.0  # Seconds
+const JUMP_COOLDOWN_TIME := 1.5  # Seconds
 
 # === STATE VARIABLES ===
 var input_enabled := true

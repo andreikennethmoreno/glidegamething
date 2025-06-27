@@ -1,0 +1,182 @@
+[gd_scene load_steps=14 format=3 uid="uid://bm58jdadi5egu"]
+
+[ext_resource type="Script" uid="uid://cvg3n0s331jum" path="res://scripts/endingscene1.gd" id="1_6a71u"]
+[ext_resource type="FontFile" uid="uid://bfbrqoltxa77f" path="res://assets/fonts/rainyhearts.ttf" id="2_d5tpm"]
+
+[sub_resource type="Animation" id="Animation_cdf8s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cwjs1"]
+resource_name = "typewriter_text"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfw5c"]
+_data = {
+&"RESET": SubResource("Animation_cdf8s"),
+&"typewriter_text": SubResource("Animation_cwjs1")
+}
+
+[sub_resource type="Theme" id="Theme_6a71u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ywvih"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xygxq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qnrvl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yxrel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s0npx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6u2yo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uhhgc"]
+
+[node name="Endingscene" type="Node"]
+script = ExtResource("1_6a71u")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -287.0
+offset_top = 168.0
+offset_right = 277.0
+offset_bottom = 560.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_d5tpm")
+theme_override_font_sizes/font_size = 32
+text = "“Return to me, and I will return to you,” says the Lord Almighty.
+— Malachi 3:7
+....
+
+“Will you ask for forgiveness?”"
+horizontal_alignment = 1
+autowrap_mode = 2
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hfw5c")
+}
+autoplay = "typewriter_text"
+
+[node name="GridContainer" type="HBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 240.0
+offset_top = -224.0
+offset_right = 558.0
+offset_bottom = -126.0
+grow_vertical = 0
+scale = Vector2(2, 2)
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="yes" type="Button" parent="GridContainer/ChoiceContainer"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_6a71u")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("2_d5tpm")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ywvih")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_xygxq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_qnrvl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_yxrel")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s0npx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6u2yo")
+theme_override_styles/normal = SubResource("StyleBoxTexture_uhhgc")
+text = "> Yes. I am ready. 
+"
+
+[node name="no" type="Button" parent="GridContainer/ChoiceContainer"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_6a71u")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_fonts/font = ExtResource("2_d5tpm")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ywvih")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_xygxq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_qnrvl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_yxrel")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s0npx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6u2yo")
+theme_override_styles/normal = SubResource("StyleBoxTexture_uhhgc")
+text = "> No. I will carry it myself. 
+"
+
+[node name="nothing" type="Button" parent="GridContainer/ChoiceContainer"]
+modulate = Color(0.968627, 0.862745, 0.584314, 1)
+layout_mode = 2
+theme = SubResource("Theme_6a71u")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/font_hover_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_colors/icon_pressed_color = Color(0.517647, 0.509804, 0.219608, 1)
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("2_d5tpm")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ywvih")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_xygxq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_qnrvl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_yxrel")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s0npx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6u2yo")
+theme_override_styles/normal = SubResource("StyleBoxTexture_uhhgc")
+text = " > Say nothing."
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="pressed" from="GridContainer/ChoiceContainer/yes" to="." method="_on_climb_pressed"]
+[connection signal="pressed" from="GridContainer/ChoiceContainer/yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="GridContainer/ChoiceContainer/no" to="." method="_on_rest_pressed"]
+[connection signal="pressed" from="GridContainer/ChoiceContainer/no" to="." method="_on_no_pressed"]
+[connection signal="pressed" from="GridContainer/ChoiceContainer/nothing" to="." method="_on_nothing_pressed"]

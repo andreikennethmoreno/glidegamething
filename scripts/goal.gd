@@ -12,8 +12,8 @@ func _process(delta: float) -> void:
 
 		print("Number of grabs: ", Save.grab_count)
 		print("____________________________")
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-
+		#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/endingscene1.tscn")
 
 func _on_body_entered(body: Node2D) -> void:
 	print(body.name)

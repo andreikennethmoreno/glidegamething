@@ -28,7 +28,7 @@ tracks/0/path = NodePath("Label:visible_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 4),
+"times": PackedFloat32Array(0, 2.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -57,17 +57,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -279.0
-offset_top = -64.0
-offset_right = 285.0
-offset_bottom = 187.0
+offset_left = -276.0
+offset_top = -46.0
+offset_right = 288.0
+offset_bottom = 205.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("2_x7dql")
-theme_override_font_sizes/font_size = 24
-text = "“She climbs, not for revenge — but to remember who she was beneath the mask.”
+theme_override_font_sizes/font_size = 48
+text = "\"You chose sin. Now climb — for the fall was yours, but the ascent is your redemption.\"
+
 
 "
 horizontal_alignment = 1
