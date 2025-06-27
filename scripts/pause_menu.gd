@@ -3,7 +3,7 @@ extends Control
 @onready var pause_menu: Control = $"."  # This should be the pause menu UI root node
 
 const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu.tscn"
-const GAME_SCENE_PATH := "res://scenes/game.tscn"
+const GAME_SCENE_PATH := "res://scenes/main_game.tscn"
 
 @onready var stats_section: Label = $stats_section
 
@@ -22,13 +22,16 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var formatted_time = format_time(Save.play_timer)
-	var height_meters = "%.2f" % abs(Save.highest_y_position)
+	var height_meters = str(int(abs(Save.current_y_position)))
 
-	stats_section.text = "Time: %s\nHighest: %s\nFalls: %d\nJumps: %d\nGrabs: %d" % [
+	stats_section.text = "Time: %s\nHeight: %s\nFalls: %d\nJumps: %d\nGrabs: %d" % [
 		formatted_time,
 		height_meters,
 		Save.fall_count,
+		Save.jump_count,
+		Save.grab_count
 	]
+
 
 	if Input.is_action_just_pressed("esc"):
 		toggle_pause()

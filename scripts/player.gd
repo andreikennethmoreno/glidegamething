@@ -31,9 +31,9 @@ var current_jump_cooldown := 0.0
 
 # === NODES ===
 @onready var animated_sprite: AnimatedSprite2D = $CharacterSprite
-@onready var hit_sound: AudioStreamPlayer2D = $hit_sound
 @onready var jump_timer: Timer = $JumpTimer
 @onready var jump_progress_bar: TextureProgressBar = $JumpProgressBar
+@onready var hit_sound: AudioStreamPlayer2D = $HitSound
 
 func format_time(seconds: float) -> String:
 	var total_seconds = int(seconds)
@@ -46,8 +46,9 @@ func _ready():
 	Save.is_playing = true
 
 func _physics_process(delta: float) -> void:
+	Save.current_y_position = global_position.y
 	var formatted_time = format_time(Save.play_timer)
-	var height_meters = "%.2f" % abs(Save.highest_y_position)
+	var height_meters = "%.2f" % abs(Save.current_y_position)
 
 	var was_on_floor = is_on_floor()
 
@@ -72,9 +73,11 @@ func _physics_process(delta: float) -> void:
 			can_regrab = false
 			_enable_grab_delay()
 			print("Wall jump from grab!")
+			Save.jump_count += 1
 		elif is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			print("Jumped")
+			Save.jump_count += 1
 
 		can_jump = false
 		Save.flap_count += 1
@@ -100,11 +103,11 @@ func _physics_process(delta: float) -> void:
 	if can_grab and can_regrab and not jump_in_cooldown and Input.is_action_pressed("grab_hold"):
 		if not is_grabbing:
 			print("Grabbing!")
+			Save.grab_count += 1
 		is_grabbing = true
 		velocity = Vector2.ZERO
 		move_and_slide()
 		animated_sprite.play("grab")
-		Save.grab_count += 1
 		return
 	else:
 		if is_grabbing:
@@ -157,6 +160,8 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("splat")
 			splat_timer = 0.3
 			print("SPLAT!")
+			Save.fall_count += 1
+			hit_sound.play()
 		else:
 			print("Safe landing.")
 		print("Landed")

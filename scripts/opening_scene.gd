@@ -8,7 +8,8 @@ var elapsed_time: float = 0.0
 const WAIT_DURATION: float = 1.5
 
 func _ready() -> void:
-	pass
+	animation_player.play("typewriter_text")
+
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "typewriter_text":
@@ -18,6 +19,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 func _process(delta: float) -> void:
 	if timer_started:
+		print("Timer started... elapsed:", elapsed_time)
 		elapsed_time += delta
 		if elapsed_time >= WAIT_DURATION:
+			print("Changing scene to main_game.tscn")
 			get_tree().change_scene_to_file("res://scenes/main_game.tscn")

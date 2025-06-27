@@ -142,8 +142,8 @@ size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 48
 text = "Time: 00:32
-Highest: 100m
-Falls: 3
+Height: 100
+Falls: 32
 Jumps: 33
 Grabs: 33"
 
